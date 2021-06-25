@@ -1,0 +1,45 @@
+<app-form
+  (newProdEvent)="guardarProducto($event)"
+  [seleccionado]="inventarioSeleccionado"
+>
+</app-form>
+<div class="card border-dark mb-3">
+  <div class="card-header">Inventario</div>
+  <div class="card-body text-dark">
+    <h5 class="card-title">Listado de mercancia</h5>
+    <div class="form-group row">
+      <label for="usuarioPeticion" class="col-form-label col-sm-2">Usuario Para Eliminar</label>
+      <div class="col-sm-6">
+        <select required class="form-select" name="usuarioPeticion" [(ngModel)]="usuarioPeticion">
+          <option *ngFor="let usuario of usuarios" [value]="usuario.idUsuario">{{ usuario.nombreUsuario }}</option>
+        </select>
+      </div>
+    </div>
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Nombre de Producto</th>
+          <th>Cantidad</th>
+          <th>Fecha de Ingreso</th>
+          <th>Usuario</th>
+          <th>Editar</th>
+          <th>Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto of inventario">
+          <td>{{ producto.idMercancia }}</td>
+          <td>{{ producto.nombreProducto }}</td>
+          <td>{{ producto.cantidad }}</td>
+          <td>{{ producto.fechaIngreso }}</td>
+          <td>{{ obtenerNombreUsuario(producto.usuarioRegistro) }}</td>
+          <td><button class="btn btn-primary" type="button" name="button" (click)="seleccionarProducto(producto.idMercancia)">Editar</button></td>
+          <td><button class="btn btn-danger" type="button" name="button" [disabled]="usuarioPeticion!=producto.usuarioRegistro" (click)="eliminarProducto(producto.idMercancia, producto.usuarioRegistro)">Eliminar</button></td>
+        </tr>
+
+
+      </tbody>
+    </table>
+  </div>
+</div>

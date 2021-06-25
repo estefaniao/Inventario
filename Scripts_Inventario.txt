@@ -1,0 +1,59 @@
+CREATE SCHEMA inventario;
+
+CREATE TABLE "inventario".tbl_cargo (
+	idcargo serial PRIMARY KEY,
+	cargo varchar NOT NULL
+);
+CREATE TABLE "inventario".tbl_usuario (
+	idusuario serial PRIMARY KEY,
+	nombre varchar NOT NULL,
+	edad int NULL,
+	idcargo int NULL,
+	fecha_ingreso timestamp NULL,
+	 CONSTRAINT fk_cargo
+      FOREIGN KEY(idcargo) 
+	  REFERENCES "inventario".tbl_cargo(idcargo)
+);
+CREATE TABLE "inventario".tbl_mercancia (
+	idmercancia serial PRIMARY KEY,
+	nombre varchar NOT NULL UNIQUE,
+	cantidad bigint NULL,
+	fecha_ingreso timestamp NULL,
+	usuario_registro int NULL,
+	usuario_peticion int NULL,
+	fecha_peticion timestamp NULL,
+	 CONSTRAINT fk_usuario_registro
+      FOREIGN KEY(usuario_registro) 
+	  REFERENCES "inventario".tbl_usuario(idusuario)
+);
+
+INSERT INTO inventario.tbl_cargo
+(cargo)
+VALUES('Asesor de ventas');
+INSERT INTO inventario.tbl_cargo
+(cargo)
+VALUES('Administrador');
+INSERT INTO inventario.tbl_cargo
+(cargo)
+VALUES('Soporte');
+
+INSERT INTO inventario.tbl_usuario
+(nombre, edad, idcargo, fecha_ingreso)
+VALUES('Estefania Otalvaro', 27, 1, '2021-03-15');
+INSERT INTO inventario.tbl_usuario
+(nombre, edad, idcargo, fecha_ingreso)
+VALUES('Carlos Rodriguez', 32, 3, '2020-08-12');
+INSERT INTO inventario.tbl_usuario
+(nombre, edad, idcargo, fecha_ingreso)
+VALUES('Felipe Gallego', 25, 2, '2019-12-09');
+INSERT INTO inventario.tbl_usuario
+(nombre, edad, idcargo, fecha_ingreso)
+VALUES('Ana Delgado', 44, 1, '2020-06-16');
+
+
+INSERT INTO inventario.tbl_mercancia
+(nombre, cantidad, fecha_ingreso, usuario_registro, usuario_peticion, fecha_peticion)
+VALUES('Producto 1', 6, '2020-06-07 19:00:00.000', 1, 2, '2021-06-25 14:32:11.000');
+INSERT INTO inventario.tbl_mercancia
+(nombre, cantidad, fecha_ingreso, usuario_registro, usuario_peticion, fecha_peticion)
+VALUES('Producto 2', 8, '2021-03-15 19:00:00.000', 3, 1, '2021-06-25 14:32:11.000');
